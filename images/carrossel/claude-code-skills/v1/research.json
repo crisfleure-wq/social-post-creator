@@ -1,0 +1,152 @@
+{
+  "tema": "claude-code skills",
+  "queries": [
+    "Claude Code skills system Anthropic CLI feature 2025",
+    "Claude Code agent skills custom capabilities extend CLI 2025",
+    "Anthropic Claude Code subagents skills markdown configuration",
+    "Claude Code skills subagents como usar tutorial PT-BR 2025 2026",
+    "Anthropic Agent Skills open standard cross-platform Codex Cursor Gemini CLI"
+  ],
+  "candidates": [
+    {
+      "title": "Equipping agents for the real world with Agent Skills",
+      "source": "Anthropic Engineering Blog",
+      "url": "https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills",
+      "publishedAt": "2025-10-16",
+      "summary": "Post oficial da Anthropic anunciando Agent Skills como framework para empacotar conhecimento procedural em pastas com SKILL.md. A abordagem usa progressive disclosure: o agente pre-carrega apenas nome e descricao de cada skill no system prompt (~30-50 tokens por skill), carregando o conteudo completo apenas quando a skill e ativada. Skills podem conter scripts Python executaveis, evitando computacao cara via tokens. O artigo descreve o mecanismo como 'onboarding guide for a new hire' e anuncia o padrao como open-source publicado em agentskills.io em dezembro de 2025. Suporte disponivel em Claude.ai, Claude Code, Agent SDK e Developer Platform.",
+      "keyPoints": [
+        "SKILL.md e o arquivo central: YAML frontmatter (name, description) + instrucoes Markdown",
+        "Progressive disclosure: metadata carregado primeiro, corpo completo so quando ativada",
+        "Skills podem incluir scripts Python executaveis para operacoes deterministas",
+        "Publicado como padrao aberto em agentskills.io em 18 de dezembro de 2025",
+        "Analogia central: 'Building a skill for an agent is like putting together an onboarding guide for a new hire'"
+      ],
+      "viralScore": 7.2,
+      "scoreBreakdown": {
+        "recency": 6,
+        "surprise": 7,
+        "technical": 8,
+        "relevance": 8,
+        "complexity": 7
+      }
+    },
+    {
+      "title": "Agent Skills Open Standard: How One Specification Conquered Every AI Coding Tool",
+      "source": "Paperclipped (via search result corroborado por agensi.io e inference.sh)",
+      "url": "https://www.paperclipped.de/en/blog/agent-skills-open-standard-interoperability/",
+      "publishedAt": "2026-03-23",
+      "summary": "Analise detalhada de como o formato SKILL.md da Anthropic se tornou o padrao de fato para skills de agentes de IA em menos de 90 dias. Em 48 horas apos a publicacao da spec (18 dez 2025), Microsoft integrou no VS Code e OpenAI adicionou ao Codex CLI e ChatGPT. Em marco de 2026, 32 ferramentas de empresas concorrentes - incluindo Google Gemini CLI, JetBrains Junie, AWS Kiro e Block Goose - leem os mesmos arquivos SKILL.md do mesmo diretorio. Simon Willison descreveu como 'deliciously tiny specification'. O repositorio anthropics/skills atingiu 100K stars no GitHub. A Vercel lancou skills.sh em 20 de janeiro de 2026, um marketplace com 89.753 skills listadas ate marco, onde a skill mais popular teve 20.000 installs em 6 horas.",
+      "keyPoints": [
+        "48 horas: Microsoft (VS Code) e OpenAI (Codex, ChatGPT) adotaram a spec",
+        "90 dias: 32 ferramentas de empresas rivais suportam o mesmo SKILL.md sem modificacao",
+        "Repositorio anthropics/skills atingiu 100K stars no GitHub",
+        "Marketplace skills.sh lancado pela Vercel em jan/2026 com 89.753 skills listadas em marco",
+        "Portabilidade total: skill escrita para Claude Code funciona em Cursor, Codex, Gemini CLI sem alteracao",
+        "Alerta de seguranca: 36% das skills auditadas continham falhas de seguranca"
+      ],
+      "viralScore": 9.1,
+      "scoreBreakdown": {
+        "recency": 9,
+        "surprise": 10,
+        "technical": 9,
+        "relevance": 9,
+        "complexity": 9
+      }
+    },
+    {
+      "title": "Extend Claude with skills - Documentacao Oficial Claude Code",
+      "source": "Claude Code Docs (code.claude.com)",
+      "url": "https://code.claude.com/docs/en/skills",
+      "publishedAt": "2026-01-01",
+      "summary": "Documentacao tecnica completa das Skills no Claude Code. Cobre estrutura de diretorios, campos de frontmatter (14 campos opcionals: name, description, when_to_use, disable-model-invocation, user-invocable, allowed-tools, model, effort, context, agent, hooks, paths, shell, argument-hint), substituicoes dinamicas de string ($ARGUMENTS, $N, ${CLAUDE_SESSION_ID}, ${CLAUDE_SKILL_DIR}), injecao de contexto dinamico via !`comando`, execucao em subagente via context:fork, e skills bundled (/simplify, /batch, /debug, /loop, /claude-api). Custom commands em .claude/commands/ foram unificados com skills. Skills sao monitoradas em tempo real via file watcher. Suporte a monorepos com descoberta automatica de skills em subdiretorios.",
+      "keyPoints": [
+        "14 campos de frontmatter para controle fino: model, effort, context:fork, allowed-tools, paths",
+        "Injecao dinamica: !`git diff HEAD` executa shell e injeta output antes de Claude ver o prompt",
+        "disable-model-invocation:true = skill so e ativada manualmente com /nome",
+        "context:fork = skill roda em subagente isolado, sem acesso ao historico da conversa",
+        "Skills unificadas com .claude/commands/ (arquivos de comando legados continuam funcionando)",
+        "Live reload: adicionar/editar/remover SKILL.md reflete na sessao atual sem restart"
+      ],
+      "viralScore": 7.8,
+      "scoreBreakdown": {
+        "recency": 7,
+        "surprise": 6,
+        "technical": 10,
+        "relevance": 9,
+        "complexity": 8
+      }
+    },
+    {
+      "title": "Claude Agent Skills: A First Principles Deep Dive",
+      "source": "Lee Han Chung (leehanchung.github.io)",
+      "url": "https://leehanchung.github.io/blogs/2025/10/26/claude-skills-deep-dive/",
+      "publishedAt": "2025-10-26",
+      "summary": "Analise tecnica aprofundada da arquitetura interna das skills. Revela que skills nao sao ferramentas executaveis - sao 'specialized prompt templates that inject domain-specific instructions into the conversation context'. A selecao de skills e feita puramente por LLM reasoning via processamento textual, sem embeddings, classificadores ou roteamento algoritmico. A dual-message architecture mostra que skills injetam dois tipos de mensagens: uma visivel no UI (isMeta:false, ex: 'The pdf skill is loading') e uma invisivel ao usuario mas enviada a API com as instrucoes completas (isMeta:true). O custo de contexto e de ~1.500+ tokens por turno quando uma skill esta ativa vs. ~100 tokens para ferramentas tradicionais.",
+      "keyPoints": [
+        "Skills sao expansao de prompt, nao codigo executavel - modificam contexto e permissoes",
+        "Selecao de skills = LLM reasoning puro (sem embeddings nem classificadores)",
+        "Dual-message architecture: mensagem visivel no UI + mensagem oculta com instrucoes para API",
+        "Custo: ~1.500+ tokens/turno com skill ativa vs. ~100 tokens para tools tradicionais",
+        "Skills vs. Tools: tools retornam resultados imediatos; skills preparam Claude para resolver"
+      ],
+      "viralScore": 7.5,
+      "scoreBreakdown": {
+        "recency": 7,
+        "surprise": 8,
+        "technical": 10,
+        "relevance": 7,
+        "complexity": 7
+      }
+    },
+    {
+      "title": "Understanding Claude Code's Full Stack: MCP, Skills, Subagents, and Hooks Explained",
+      "source": "alexop.dev",
+      "url": "https://alexop.dev/posts/understanding-claude-code-full-stack/",
+      "publishedAt": "2025-11-09",
+      "summary": "Artigo que apresenta um modelo mental em camadas para as extensoes do Claude Code. O autor enquadra o Claude Code como 'framework para orquestrar agentes de IA', nao como ferramenta de coding. As camadas sao: MCP (conexoes externas) -> CLAUDE.md (memoria do projeto) -> Skills (comportamentos reutilizaveis) -> Subagentes (isolamento de contexto) -> Hooks (automacao por eventos). A comparacao tecnica entre Skills, Subagents e MCP evidencia que Skills tem alta eficiencia de contexto e podem ser paralelizadas via context:fork, enquanto MCP tem baixa eficiencia de contexto. O artigo destaca o quote: 'Claude Code is, with hindsight, poorly named - its a tool for general computer automation'.",
+      "keyPoints": [
+        "Modelo mental de 5 camadas: MCP -> CLAUDE.md -> Skills -> Subagentes -> Hooks",
+        "Skills: alta eficiencia de contexto, paralelizaveis via context:fork",
+        "Subagentes: previnem 'context poisoning' ao isolar trabalho pesado em janelas separadas",
+        "'Claude Code is, with hindsight, poorly named - its a tool for general computer automation'",
+        "Hooks: automacao baseada em eventos do ciclo de vida (file edit, tool use, session start/stop)"
+      ],
+      "viralScore": 6.8,
+      "scoreBreakdown": {
+        "recency": 6,
+        "surprise": 7,
+        "technical": 8,
+        "relevance": 8,
+        "complexity": 6
+      }
+    }
+  ],
+  "chosen": {
+    "title": "Agent Skills Open Standard: How One Specification Conquered Every AI Coding Tool",
+    "source": "Paperclipped / corroborado por paperclipped.de, agensi.io, inference.sh, github.com/VoltAgent/awesome-agent-skills",
+    "url": "https://www.paperclipped.de/en/blog/agent-skills-open-standard-interoperability/",
+    "publishedAt": "2026-03-23",
+    "summary": "O formato SKILL.md, criado pela Anthropic para o Claude Code em outubro de 2025, se tornou o padrao aberto de skills para agentes de IA em tempo record. Em 48 horas apos a publicacao da spec (18 dez 2025), Microsoft e OpenAI ja tinham integrado. Em 90 dias, 32 ferramentas de empresas rivais - Google, JetBrains, AWS, Block, Sourcegraph - leem o mesmo arquivo SKILL.md sem modificacao. Uma skill escrita para Claude Code funciona identicamente no Codex CLI, Cursor, Gemini CLI e Kiro. O repositorio anthropics/skills atingiu 100K stars no GitHub. A Vercel lancou o marketplace skills.sh em janeiro/2026 com 89.753 skills, onde a skill mais popular chegou a 20.000 installs em 6 horas. O padrao foi descrito por Simon Willison como 'deliciously tiny specification' - o spec inteiro cabe em uma leitura de hora do almoco.",
+    "keyPoints": [
+      "SKILL.md: arquivo Markdown com YAML frontmatter (name + description) + instrucoes - o spec inteiro e minimalista",
+      "48h: Microsoft VS Code e OpenAI Codex/ChatGPT adotaram a spec apos publicacao em 18 dez 2025",
+      "90 dias: 32 ferramentas de rivais (Google Gemini CLI, JetBrains Junie, AWS Kiro, Block Goose) suportam o mesmo formato",
+      "Skills portaveis: escritas uma vez, rodam em Claude Code, Cursor, Codex, Gemini CLI sem alteracao",
+      "Marketplace skills.sh (Vercel, jan/2026): 89.753 skills listadas ate marco, top skill = 20K installs em 6h",
+      "Alerta: 36% das skills publicas auditadas continham falhas de seguranca (skills herdam permissoes totais do agente)"
+    ],
+    "angle": "O arquivo de 2 linhas que a Anthropic publicou e que a Microsoft, OpenAI e Google adotaram em 48 horas - como o SKILL.md virou o padrao universal de extensoes para agentes de IA",
+    "whyChosen": "Combinacao unica de surpresa factual mensuravel (48h para adocao cross-vendor, 32 ferramentas rivais, 100K stars), recencia maxima (marco 2026), tangibilidade tecnica concreta (estrutura SKILL.md mostravel em terminal), e angulo anti-intuitivo perfeito para carrossel: um arquivo minimalista de 2 linhas que se tornou o padrao da industria mais rapido que qualquer spec anterior em AI tooling. Supera os outros candidatos por ter o 'didn't see that coming' mais forte: OpenAI e Google adotando spec da Anthropic em menos de 2 dias.",
+    "viralScore": 9.1
+  },
+  "sources": [
+    "https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills",
+    "https://www.paperclipped.de/en/blog/agent-skills-open-standard-interoperability/",
+    "https://code.claude.com/docs/en/skills",
+    "https://leehanchung.github.io/blogs/2025/10/26/claude-skills-deep-dive/",
+    "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview",
+    "https://github.com/VoltAgent/awesome-agent-skills",
+    "https://www.agensi.io/learn/agent-skills-open-standard",
+    "https://alexop.dev/posts/understanding-claude-code-full-stack/"
+  ]
+}

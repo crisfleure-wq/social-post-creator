@@ -1,0 +1,23 @@
+A Microsoft e a OpenAI adotaram uma spec da Anthropic em menos de 48 horas. Isso nunca tinha acontecido antes. 🕳️
+
+Em outubro de 2025, a Anthropic adicionou Skills ao Claude Code: um arquivo Markdown com YAML frontmatter, nome, descrição e instruções. O spec inteiro cabe numa leitura de hora do almoço.
+
+Em 18 de dezembro, publicaram como open standard. Dois dias depois, VS Code e Codex CLI já liam o mesmo SKILL.md. Sem reunião de comitê, sem processo de adoção. Só funcionou.
+
+Em 90 dias, 32 ferramentas de empresas rivais — Google Gemini CLI, JetBrains Junie, AWS Kiro, Block Goose — passaram a rodar o mesmo arquivo sem modificação. Você escreve uma skill para Claude Code e ela funciona em qualquer agente do mercado. Portabilidade real, não promessa de roadmap.
+
+A Vercel lançou o marketplace skills.sh em janeiro de 2026. Em dois meses: 89.753 skills listadas. A mais popular chegou a 20 mil installs em 6 horas. Estamos no npm de 2015, de novo.
+
+Mas tem um ponto de atenção: 36% das skills públicas auditadas tinham falhas de segurança. Skills herdam as permissões totais do agente — filesystem, variáveis de ambiente, histórico de sessão. Antes de instalar qualquer skill externa, leia o SKILL.md. Todo o frontmatter. Sem exceção.
+
+Você já escreve skills para os seus agentes, ou ainda tá no CLAUDE.md na mão? Comenta aqui como você tá organizando seu setup 👇
+
+@brunobracaioli
+
+.
+.
+.
+.
+.
+
+#claudecode #agentskills #devbrasil #llmops #anthropic

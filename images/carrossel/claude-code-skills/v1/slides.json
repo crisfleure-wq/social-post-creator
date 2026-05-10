@@ -1,0 +1,145 @@
+{
+  "theme": "dark",
+  "title": "Agent Skills · O padrão que conquistou tudo",
+  "slides": [
+    {
+      "type": "cover",
+      "label": "AGENT SKILLS · OPEN STANDARD · 2026",
+      "title": "O arquivo de\n2 linhas que\nconquistou tudo",
+      "titleAccent": "conquistou tudo",
+      "titleSize": 120,
+      "terminalPreview": "$ cat SKILL.md  # o padrão da indústria está aqui",
+      "badges": [
+        { "text": "Agent Skills", "color": "primary" },
+        { "text": "Open Standard", "color": "secondary" },
+        { "text": "8 slides", "color": "tertiary" }
+      ]
+    },
+    {
+      "type": "content",
+      "label": "STEP 1 — O COMEÇO",
+      "title": "Anthropic publicou\numa spec minimalista",
+      "titleAccent": "spec minimalista",
+      "bodySize": 38,
+      "body": "Em outubro de 2025, a Anthropic lançou o SKILL.md no Claude Code. Um arquivo Markdown com YAML frontmatter. Nome, descrição, instruções. Nada mais. Simon Willison chamou de 'deliciously tiny specification'.",
+      "terminal": [
+        { "text": "# estrutura completa de uma skill", "type": "comment" },
+        { "text": "---", "type": "command" },
+        { "text": "name: code-reviewer", "type": "command" },
+        { "text": "description: Revisa PRs com foco em segurança", "type": "command" },
+        { "text": "---", "type": "command" },
+        { "text": "# instruções em Markdown aqui", "type": "comment" }
+      ],
+      "badges": [
+        { "text": "out/2025", "color": "primary" },
+        { "text": "Claude Code", "color": "secondary" }
+      ]
+    },
+    {
+      "type": "content",
+      "label": "STEP 2 — 48 HORAS",
+      "title": "48h depois:\nMicrosoft e OpenAI\nadotaram",
+      "titleAccent": "48h depois",
+      "bodySize": 38,
+      "body": "Em 18 de dezembro de 2025, a Anthropic publicou o spec como open standard em agentskills.io. Em menos de 2 dias, Microsoft integrou no VS Code e OpenAI adicionou ao Codex CLI e ao ChatGPT.",
+      "badges": [
+        { "text": "18 dez 2025", "color": "primary" },
+        { "text": "VS Code", "color": "secondary" },
+        { "text": "Codex CLI", "color": "tertiary" }
+      ]
+    },
+    {
+      "type": "content",
+      "label": "STEP 3 — 90 DIAS",
+      "title": "90 dias:\n32 ferramentas\nde rivais",
+      "titleAccent": "32 ferramentas",
+      "bodySize": 36,
+      "body": "Sem fork, sem extensão do formato. O mesmo SKILL.md que você escreve para Claude Code roda sem modificação em Cursor, Gemini CLI, JetBrains Junie, AWS Kiro e Block Goose.",
+      "steps": [
+        "Google Gemini CLI — suporte nativo",
+        "JetBrains Junie — integrado no IDE",
+        "AWS Kiro — deploy direto na cloud",
+        "Block Goose — toolchain open-source",
+        "Sourcegraph Cody — contexto de repositório"
+      ],
+      "badges": [
+        { "text": "portabilidade total", "color": "primary" },
+        { "text": "mar/2026", "color": "secondary" }
+      ]
+    },
+    {
+      "type": "content",
+      "label": "STEP 4 — COMO FUNCIONA",
+      "title": "Progressive disclosure:\ncarrega só o\nque precisa",
+      "titleAccent": "Progressive disclosure",
+      "bodySize": 36,
+      "terminal": [
+        { "text": "# o agente carrega assim na sessão", "type": "comment" },
+        { "text": "system_prompt += skill.name + skill.description", "type": "command" },
+        { "text": "# ~30-50 tokens por skill no preload", "type": "comment" },
+        { "text": "# quando ativada: corpo completo injetado", "type": "comment" },
+        { "text": "context += skill.full_content   # ~1.500 tokens", "type": "arrow" },
+        { "text": "# skill inativa = custo zero de contexto", "type": "comment" }
+      ],
+      "badges": [
+        { "text": "custo zero inativa", "color": "primary" },
+        { "text": "injeta quando ativa", "color": "secondary" },
+        { "text": "LLM routing", "color": "tertiary" }
+      ]
+    },
+    {
+      "type": "content",
+      "label": "STEP 5 — MARKETPLACE",
+      "title": "skills.sh: 89.753\nskills em 2 meses",
+      "titleAccent": "89.753",
+      "bodySize": 38,
+      "body": "Em janeiro de 2026, a Vercel lançou o marketplace skills.sh. Em março já eram quase 90 mil skills listadas. A skill mais popular atingiu 20.000 installs em 6 horas — velocidade de npm em 2015.",
+      "badges": [
+        { "text": "skills.sh", "color": "primary" },
+        { "text": "Vercel jan/2026", "color": "secondary" },
+        { "text": "20K installs/6h", "color": "tertiary" }
+      ]
+    },
+    {
+      "type": "content",
+      "label": "STEP 6 — ATENÇÃO",
+      "title": "36% das skills\npúblicas têm\nfalhas de segurança",
+      "titleAccent": "falhas de segurança",
+      "bodySize": 36,
+      "body": "Skills herdam as permissões totais do agente. Uma skill maliciosa de um marketplace tem acesso ao seu filesystem, variáveis de ambiente e histórico da sessão. Audite antes de instalar.",
+      "terminal": [
+        { "text": "# antes de instalar qualquer skill", "type": "comment" },
+        { "text": "cat ~/.claude/skills/externa/SKILL.md", "type": "command" },
+        { "text": "# inspecione: allowed-tools, paths, shell", "type": "comment" },
+        { "text": "# red flags: shell: true sem paths restritos", "type": "arrow" },
+        { "text": "# red flags: allowed-tools: Bash sem allow-list", "type": "arrow" }
+      ],
+      "badges": [
+        { "text": "36% auditadas", "color": "tertiary" },
+        { "text": "audite sempre", "color": "primary" }
+      ]
+    },
+    {
+      "type": "stack",
+      "label": "TL;DR",
+      "title": "O que levar\ndaqui",
+      "titleAccent": "levar",
+      "bodySize": 36,
+      "badgeScale": 0.72,
+      "items": [
+        { "name": "SKILL.md", "description": "frontmatter YAML + Markdown — spec que cabe num almoço" },
+        { "name": "48h / 32 tools", "description": "Microsoft, OpenAI e Google adotaram antes de 90 dias" },
+        { "name": "skills.sh", "description": "marketplace Vercel com 89K+ skills, crescendo rápido" },
+        { "name": "36% vulneráveis", "description": "skills públicas herdam permissões totais — audite antes" }
+      ],
+      "terminal": [
+        { "text": "regra de ouro: skill escrita uma vez, roda em qualquer agente — audite antes de instalar", "type": "arrow" }
+      ],
+      "badges": [
+        { "text": "salve esse post", "color": "primary" },
+        { "text": "@brunobracaioli", "color": "secondary" },
+        { "text": "compartilhe", "color": "tertiary" }
+      ]
+    }
+  ]
+}
