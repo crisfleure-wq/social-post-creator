@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Slide</title>
+<style>
+{{TOKENS_CSS}}
+
+.canvas { gap: 0; }
+
+.cover-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 64px;
+}
+
+.cover-title {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  white-space: pre-line;
+  margin-top: auto;
+  margin-bottom: 56px;
+}
+
+.cover-title .accent { color: var(--accent-primary); }
+
+.cover-tp {
+  margin-bottom: 36px;
+}
+
+.cover-badges {
+  margin-bottom: 0;
+}
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="cover-header">
+    <span class="label" id="label"></span>
+    <span class="footer-pagenum" id="page"></span>
+  </div>
+  <h1 class="cover-title" id="title"></h1>
+  <div class="terminal-preview cover-tp" id="tp"></div>
+  <div class="badges cover-badges" id="badges"></div>
+  <div class="footer">
+    <div class="brand">
+      <img class="mascot" src="{{MASCOT_DATA_URI}}" alt="">
+      <span class="handle">@brunobracaioli</span>
+    </div>
+    <span class="pagenum">{{PAGE_LABEL}}</span>
+  </div>
+</div>
+<script>
+const SLIDE = {{SLIDE_JSON}};
+
+document.getElementById('label').textContent = SLIDE.label || '';
+document.getElementById('page').textContent = '';
+
+const titleEl = document.getElementById('title');
+titleEl.style.fontSize = (SLIDE.titleSize || 144) + 'px';
+const titleText = SLIDE.title || '';
+const accent = SLIDE.titleAccent || '';
+if (accent && titleText.includes(accent)) {
+  const idx = titleText.indexOf(accent);
+  titleEl.appendChild(document.createTextNode(titleText.slice(0, idx)));
+  const span = document.createElement('span');
+  span.className = 'accent';
+  span.textContent = accent;
+  titleEl.appendChild(span);
+  titleEl.appendChild(document.createTextNode(titleText.slice(idx + accent.length)));
+} else {
+  titleEl.textContent = titleText;
+}
+
+const tp = document.getElementById('tp');
+if (SLIDE.terminalPreview) {
+  tp.textContent = SLIDE.terminalPreview;
+} else {
+  tp.style.display = 'none';
+}
+
+const badgesEl = document.getElementById('badges');
+const badges = SLIDE.badges || [];
+const scale = SLIDE.badgeScale || 1;
+for (const b of badges) {
+  const el = document.createElement('span');
+  el.className = 'badge ' + (b.color || 'primary');
+  el.textContent = b.text;
+  if (scale !== 1) {
+    el.style.fontSize = (22 * scale) + 'px';
+    el.style.padding = (10 * scale) + 'px ' + (18 * scale) + 'px';
+  }
+  badgesEl.appendChild(el);
+}
+if (badges.length === 0) badgesEl.style.display = 'none';
+</script>
+</body>
+</html>

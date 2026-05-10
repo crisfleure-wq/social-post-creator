@@ -1,0 +1,26 @@
+A Anthropic vazou o próprio código e quase ninguém percebeu o tamanho disso. 🔓
+
+Um arquivo de 59.8 MB publicado por acidente expôs 512 mil linhas do Claude Code — arquitetura do agente, prompts internos, guardrails de segurança, tudo.
+
+Não foi hacker. Foi erro humano. O bundler gerava source maps por padrão e ninguém lembrou de adicionar *.map ao .npmignore. Um descuido de uma linha jogou meses de engenharia no domínio público.
+
+O que saiu do vazamento foi pesado: 44 features prontas e escondidas, um modelo chamado Mythos descrito como além do Opus, e um sistema de "AI Pet" apelidado internamente de Tamagotchi. Código real, compilado, só esperando ser ativado. 🐾
+
+E a cereja do bolo: no mesmo dia, uma versão trojanizada do axios foi publicada no npm. Quem instalou o Claude Code entre 00:21 e 03:29 UTC de 31 de março pode ter baixado um RAT junto. Coincidência ou não, o timing foi sinistro. ⚠️
+
+A Anthropic agiu rápido — removeu o arquivo, deletou versões antigas, enviou DMCAs. Mas o código já tinha sido espelhado em dezenas de repos com mais de 10 mil stars antes da remoção. O que vai pro GitHub, fica no GitHub. 🌐
+
+A lição real não é sobre a Anthropic. É sobre você: quando foi a última vez que rodou npm pack --dry-run antes de publicar? Você sabe exatamente o que está dentro do seu pacote agora? 🎯
+
+Salve esse post — uma hora você vai precisar explicar isso pra alguém do seu time.
+
+
+
+
+.
+.
+.
+.
+.
+
+#tecnologia #programacao #segurancadigital #inteligenciaartificial #opensource #claudeai #anthropic #desenvolvimentoweb #cybersecurity #devops #nodejs #npm #typescript #engenhariasoftware #vazamentodedados #supplychain #segurancadainformacao #claudecode #aitools #llm #modelosdelinguagem #devbrasil #programadoresbrasilieros #techbrasil #ciberseguranca

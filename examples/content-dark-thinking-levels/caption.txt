@@ -1,0 +1,24 @@
+A IA não para de pensar. Você é quem decide o quanto. 🧠
+
+A maioria usa Claude Code no piloto automático. Mas existe um controle que poucos exploram — e ele muda completamente a qualidade das respostas.
+
+No Claude 4.6, o thinking virou adaptativo. O modelo decide sozinho quantos tokens gastar raciocinando, baseado em dois fatores: o effort level que você configurou e a complexidade real do problema.
+
+Aquele hack da comunidade de escrever "ultrathink" no prompt? Morreu. Nos modelos 4.6, essas palavras são tratadas como instrução comum. Quem aloca os tokens de raciocínio agora é o adaptive reasoning, não o vocabulário do seu prompt. 🚫
+
+O dial que importa hoje é o effort level: low, medium, high e max. High já é o padrão e quase sempre ativa o thinking. Max empurra o teto — use quando o problema for complexo de verdade.
+
+E se quiser ligar ou desligar o extended thinking por completo, é só Alt+T no Linux/Windows ou Option+T no Mac. ⚡
+
+Você tá usando o effort level certo ou tá deixando o Claude pensar menos do que deveria? Comenta aqui 👇
+
+
+
+
+.
+.
+.
+.
+.
+
+#claudeai #claudecode #inteligenciaartificial #programacao #produtividadedigital #desenvolvimentodesoftware #aitools #llm #promptengineering #engenhariadesoft #ferramentasai #modelosdelinguagem #anthropic #extendedthinking #adaptivethinking #effortlevel #aidev #devbrasil #programadorbr #tecbrasil #aicoding #claudeopus #claudesonnet #thinkingmodel #aiworkflow

@@ -1,0 +1,24 @@
+O Claude Code tem 4 cérebros. Você só usa 1. 🧠
+
+Toda vez que você fecha o terminal, o Claude esquece tudo. Stack, padrões, bugs, arquitetura. Vai embora. Zero.
+
+Mas existe um sistema completo de memória que quase ninguém configura: CLAUDE.md, Auto Memory, contexto de sessão e Auto Dream.
+
+O CLAUDE.md é um arquivo markdown na raiz do projeto. Você escreve uma vez. Ele lê toda sessão. Suas convenções, comandos e regras — ele nunca mais pergunta de novo. ⚡
+
+O Auto Memory vai além: o Claude salva notas sozinho enquanto trabalha. Mas depois de 200 sessões, vira um caos. Notas obsoletas, datas erradas, bugs documentados 4x com palavras diferentes. 💀
+
+É aí que entra o Auto Dream. Entre sessões, um sub-agente roda em background e consolida tudo. Mapeia o estado atual, mergeia duplicatas, deleta lixo e mantém o MEMORY.md abaixo de 200 linhas. Como um sono REM — a IA dorme e acorda mais inteligente. 🌙
+
+Como acessar? Digita /memory dentro do Claude Code. Lá você vê: Auto-memory (on por padrão), Auto-dream (off por enquanto), Project memory (CLAUDE.md) e User memory (~/.claude/CLAUDE.md). O toggle do Auto Dream aparece no menu, mas ainda depende de feature flag da Anthropic. Dica: adicione "autoDreamEnabled": true no ~/.claude/settings.json pra ativar automaticamente quando liberar. E se sua versão for 2.1.87+, já pode rodar /dream manualmente pra consolidar a memória na hora. ⚙️
+
+Isso é a diferença entre uma IA que começa do zero toda vez e uma que realmente aprende com o seu projeto. 🔥
+
+Você já usou CLAUDE.md ou ainda tá deixando o Claude esquecer tudo? Comenta aqui 👇
+
+.
+.
+.
+.
+.
+#claudecode #anthropic #inteligenciaartificial #programacao #desenvolvimentodesoftware #aitools #devbrasil #codigolimpo #arquiteturadesoftware #produtividadedev #llm #aiprogramming #claudeai #memoriaia #automacao #engenhariadesoft #devtips #ferramentasdev #aiworkflow #aiagents #devlife #techbrasil #softwareengineering #promptengineering #ianodesenvolvimento

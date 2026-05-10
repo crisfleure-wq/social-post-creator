@@ -1,0 +1,143 @@
+{
+  "theme": "dark",
+  "title": "Claude Code · Thinking Levels",
+  "slides": [
+    {
+      "type": "cover",
+      "label": "EXTENDED THINKING · ADAPTIVE REASONING",
+      "title": "Os níveis de\npensamento\ndo Claude Code",
+      "titleAccent": "pensamento",
+      "titleSize": 144,
+      "terminalPreview": "$ claude · /config · effort: low → medium → high → max",
+      "badges": [
+        { "text": "Opus 4.6", "color": "primary" },
+        { "text": "Sonnet 4.6", "color": "secondary" },
+        { "text": "8 slides", "color": "tertiary" }
+      ]
+    },
+    {
+      "type": "content",
+      "label": "STEP 1 — O TOGGLE",
+      "title": "Alt+T liga o\nextended thinking",
+      "titleAccent": "extended thinking",
+      "bodySize": 36,
+      "body": "Aperta Alt+T (ou Option+T no Mac) e o Claude ganha um budget de tokens para raciocinar internamente antes de responder. Você também pode ligar/desligar via /config.",
+      "terminal": [
+        { "text": "# Liga / desliga o extended thinking", "type": "comment" },
+        { "text": "Alt+T   (Windows / Linux)", "type": "command" },
+        { "text": "⌥ + T   (macOS)", "type": "command" },
+        { "text": "# ou pelo menu de configuração", "type": "comment" },
+        { "text": "/config", "type": "command" }
+      ],
+      "badges": [
+        { "text": "atalho global", "color": "primary" },
+        { "text": "/config também serve", "color": "secondary" }
+      ]
+    },
+    {
+      "type": "content",
+      "label": "STEP 2 — O QUE MUDOU",
+      "title": "Nos 4.6 chegou o\nAdaptive Thinking",
+      "titleAccent": "Adaptive Thinking",
+      "bodySize": 38,
+      "body": "Em Opus 4.6 e Sonnet 4.6, o thinking não é mais um budget fixo. O próprio modelo decide quantos tokens gastar raciocinando, calibrado por dois fatores: o effort level que você configurou e a complexidade da query.",
+      "badges": [
+        { "text": "alocação dinâmica", "color": "primary" },
+        { "text": "decidido pelo modelo", "color": "secondary" },
+        { "text": "calibrado por effort", "color": "tertiary" }
+      ]
+    },
+    {
+      "type": "content",
+      "label": "STEP 3 — OS 4 EFFORT LEVELS",
+      "title": "low · medium ·\nhigh · max",
+      "titleAccent": "max",
+      "bodySize": 38,
+      "steps": [
+        "low — pula o thinking em problemas simples",
+        "medium — pensa quando faz diferença",
+        "high — DEFAULT, quase sempre pensa antes",
+        "max — empurra o teto, raciocínio mais longo"
+      ],
+      "badges": [
+        { "text": "default = high", "color": "primary" },
+        { "text": "ajustável no /config", "color": "secondary" },
+        { "text": "também via API", "color": "tertiary" }
+      ]
+    },
+    {
+      "type": "content",
+      "label": "STEP 4 — O LORE DAS KEYWORDS",
+      "title": "think → think hard\n→ megathink → ultrathink",
+      "titleAccent": "ultrathink",
+      "bodySize": 36,
+      "body": "A escala informal que a comunidade criou para escalar o raciocínio dentro do prompt. Cada palavra-chave sinalizava ao modelo para gastar progressivamente mais tokens pensando.",
+      "terminal": [
+        { "text": "# escala original (Claude 3.7 / 4.0)", "type": "comment" },
+        { "text": "think         → ~4.000 tokens de raciocínio", "type": "arrow" },
+        { "text": "think hard    → mais tokens", "type": "arrow" },
+        { "text": "megathink     → ainda mais", "type": "arrow" },
+        { "text": "ultrathink    → o teto da brincadeira", "type": "arrow" }
+      ],
+      "badges": [
+        { "text": "Claude 3.7 / 4.0", "color": "secondary" },
+        { "text": "budget fixo", "color": "tertiary" }
+      ]
+    },
+    {
+      "type": "content",
+      "label": "STEP 5 — ATENÇÃO",
+      "title": "Nos 4.6, ultrathink\nNÃO é mais mágico",
+      "titleAccent": "NÃO é mais mágico",
+      "bodySize": 42,
+      "body": "No Opus 4.6 e Sonnet 4.6, frases como \"think\", \"think hard\" e \"think more\" são interpretadas como instruções normais de prompt e NÃO alocam tokens de thinking diretamente. A alocação real é feita pelo adaptive reasoning a partir do effort level.",
+      "badges": [
+        { "text": "keywords ≠ budget", "color": "primary" },
+        { "text": "effort level manda", "color": "secondary" },
+        { "text": "muita gente erra isso", "color": "tertiary" }
+      ]
+    },
+    {
+      "type": "content",
+      "label": "STEP 6 — NA PRÁTICA",
+      "title": "O dial real\né o effort level",
+      "titleAccent": "effort level",
+      "badgeScale": 0.72,
+      "terminal": [
+        { "text": "# Abre o painel de configuração", "type": "comment" },
+        { "text": "/config", "type": "command" },
+        { "text": "# Procure por: thinking → effort", "type": "comment" },
+        { "text": "effort: low      # tarefas triviais, mais rápido", "type": "arrow" },
+        { "text": "effort: medium   # equilíbrio padrão", "type": "arrow" },
+        { "text": "effort: high     # default — recomendado", "type": "arrow" },
+        { "text": "effort: max      # debugging pesado, refactor grande", "type": "arrow" }
+      ],
+      "badges": [
+        { "text": "/config", "color": "primary" },
+        { "text": "ou settings.json", "color": "secondary" },
+        { "text": "também na API", "color": "tertiary" }
+      ]
+    },
+    {
+      "type": "stack",
+      "label": "TL;DR",
+      "title": "O que levar\ndaqui",
+      "titleAccent": "levar",
+      "bodySize": 36,
+      "badgeScale": 0.72,
+      "items": [
+        { "name": "Alt+T / Option+T", "description": "liga ou desliga o extended thinking por completo" },
+        { "name": "Adaptive Thinking", "description": "nos 4.6, o modelo aloca os tokens de raciocínio sozinho" },
+        { "name": "Effort Level", "description": "low · medium · high (default) · max — o dial que importa hoje" }
+      ],
+      "terminal": [
+        { "text": "regra de ouro: nos 4.6, gire o effort level — não conte com ultrathink", "type": "arrow" }
+      ],
+      "badges": [
+        { "text": "salve esse post", "color": "primary" },
+        { "text": "@brunobracaioli", "color": "secondary" },
+        { "text": "compartilhe", "color": "tertiary" }
+      ]
+    }
+  ]
+}
