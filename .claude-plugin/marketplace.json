@@ -1,17 +1,14 @@
 {
-  "name": "Social Post Creator Marketplace",
-  "description": "Plugin para criar posts Instagram (carrossel, estático, stories) multi-cliente",
-  "version": "1.0.0",
+  "name": "social-post-creator-marketplace",
+  "owner": {
+    "name": "Blink Marketing"
+  },
   "plugins": [
     {
-      "id": "social-post-creator",
-      "name": "Social Post Creator",
+      "name": "social-post-creator",
+      "source": ".",
       "description": "Pipeline multi-agente para criar posts Instagram (carrossel, estático, stories) multi-cliente",
-      "version": "1.0.0",
-      "path": ".",
-      "author": {
-        "name": "Blink Marketing"
-      }
+      "version": "1.0.0"
     }
   ]
 }
