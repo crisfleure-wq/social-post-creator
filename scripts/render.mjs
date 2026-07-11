@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /**
- * Renderer Puppeteer para carrosseis Instagram (1080×1350).
+ * Renderer Puppeteer para carrosseis/stories Instagram.
  *
- * Uso: node scripts/render.mjs <output-dir>
+ * Uso: node scripts/render.mjs <output-dir> [--client=<slug>] [--canvas=WxH]
  *
  * Espera <output-dir>/slides.json (formato carousel.json).
  * Gera <output-dir>/html/slide_NN.html e <output-dir>/slides/slide_NN.png.
- * Atualiza <output-dir>/meta.json e valida <output-dir>/caption.txt (≤5 hashtags).
+ * Atualiza <output-dir>/meta.json e valida <output-dir>/caption.txt.
  */
 import {
   existsSync,
@@ -20,17 +20,53 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { z } from 'zod';
 import puppeteer from 'puppeteer';
+import { loadClient } from './lib/client-loader.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = resolve(__dirname, '..');
-const SKILL_DIR = join(PROJECT_ROOT, '.claude', 'skills', 'hacker-carousel');
-const TEMPLATES_DIR = join(SKILL_DIR, 'templates');
-const TOKENS_PATH = join(SKILL_DIR, 'tokens.css');
-const MASCOT_PATH = join(PROJECT_ROOT, 'public', 'claude-code-icon.png');
 
-const CANVAS_W = 1080;
-const CANVAS_H = 1350;
-const MAX_HASHTAGS = 5;
+// Parse --client and --canvas flags
+function parseFlags(args) {
+  let clientSlug = null;
+  let canvasOverride = null;
+  for (const arg of args) {
+    if (arg.startsWith('--client=')) clientSlug = arg.split('=')[1];
+    if (arg.startsWith('--canvas=')) canvasOverride = arg.split('=')[1];
+  }
+  return { clientSlug, canvasOverride };
+}
+
+const { clientSlug, canvasOverride } = parseFlags(process.argv.slice(3));
+
+// Resolve paths: client-aware or legacy fallback
+let TEMPLATES_DIR, TOKENS_PATH, MASCOT_PATH, CLIENT_HANDLE, MAX_HASHTAGS;
+let CANVAS_W = 1080;
+let CANVAS_H = 1440;
+
+if (clientSlug) {
+  const format = canvasOverride === '1080x1920' ? 'stories' : 'carrossel';
+  const { config, formatConfig, paths } = loadClient(clientSlug, format);
+  TEMPLATES_DIR = paths.templatesDir;
+  TOKENS_PATH = paths.tokensPath;
+  MASCOT_PATH = paths.logoPath || paths.mascotPath;
+  CLIENT_HANDLE = config.handle;
+  MAX_HASHTAGS = config.caption?.maxHashtags ?? 5;
+  CANVAS_W = formatConfig.canvas.width;
+  CANVAS_H = formatConfig.canvas.height;
+} else {
+  // Legacy fallback (brunobracaioli / hacker-carousel)
+  const SKILL_DIR = join(PROJECT_ROOT, 'skills', 'hacker-carousel');
+  TEMPLATES_DIR = join(SKILL_DIR, 'templates');
+  TOKENS_PATH = join(SKILL_DIR, 'tokens.css');
+  MASCOT_PATH = join(PROJECT_ROOT, 'public', 'claude-code-icon.png');
+  CLIENT_HANDLE = '@brunobracaioli';
+  MAX_HASHTAGS = 5;
+}
+
+if (canvasOverride) {
+  const [w, h] = canvasOverride.split('x').map(Number);
+  if (w && h) { CANVAS_W = w; CANVAS_H = h; }
+}
 
 const BadgeSchema = z.object({
   text: z.string().min(1).max(40),
@@ -90,15 +126,14 @@ const CarouselSchema = z.object({
   slides: z.array(SlideSchema).min(5).max(10),
 });
 
-function readMascotDataUri() {
-  if (!existsSync(MASCOT_PATH)) {
-    throw new Error(`Mascote não encontrada em ${MASCOT_PATH}`);
-  }
-  const buf = readFileSync(MASCOT_PATH);
-  return `data:image/png;base64,${buf.toString('base64')}`;
+function readAssetDataUri(assetPath) {
+  if (!assetPath || !existsSync(assetPath)) return '';
+  const buf = readFileSync(assetPath);
+  const ext = assetPath.toLowerCase().endsWith('.png') ? 'png' : 'jpeg';
+  return `data:image/${ext};base64,${buf.toString('base64')}`;
 }
 
-function buildHtml({ slide, tokensCss, mascotDataUri, pageLabel }) {
+function buildHtml({ slide, tokensCss, logoDataUri, pageLabel, handle }) {
   const templatePath = join(TEMPLATES_DIR, `${slide.type}.html`);
   if (!existsSync(templatePath)) {
     throw new Error(`Template não encontrado para tipo "${slide.type}": ${templatePath}`);
@@ -107,7 +142,9 @@ function buildHtml({ slide, tokensCss, mascotDataUri, pageLabel }) {
   return tpl
     .replace('{{TOKENS_CSS}}', tokensCss)
     .replace('{{SLIDE_JSON}}', JSON.stringify(slide))
-    .replaceAll('{{MASCOT_DATA_URI}}', mascotDataUri)
+    .replaceAll('{{MASCOT_DATA_URI}}', logoDataUri)
+    .replaceAll('{{LOGO_DATA_URI}}', logoDataUri)
+    .replaceAll('{{HANDLE}}', handle || '')
     .replaceAll('{{PAGE_LABEL}}', pageLabel);
 }
 
@@ -153,7 +190,7 @@ async function render(outputDir) {
   }
 
   const tokensCss = readFileSync(TOKENS_PATH, 'utf8');
-  const mascotDataUri = readMascotDataUri();
+  const logoDataUri = readAssetDataUri(MASCOT_PATH);
 
   const htmlDir = join(outputDir, 'html');
   const slidesDir = join(outputDir, 'slides');
@@ -167,7 +204,7 @@ async function render(outputDir) {
   for (const [i, slide] of carousel.slides.entries()) {
     const num = pad2(i + 1);
     const pageLabel = `${num} / ${pad2(total)}`;
-    const html = buildHtml({ slide, tokensCss, mascotDataUri, pageLabel });
+    const html = buildHtml({ slide, tokensCss, logoDataUri, pageLabel, handle: CLIENT_HANDLE });
     const htmlPath = join(htmlDir, `slide_${num}.html`);
     writeFileSync(htmlPath, html);
   }

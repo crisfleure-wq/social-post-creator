@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(spc *)",
+      "Bash(node scripts/*)",
+      "Bash(mkdir -p *)"
+    ]
+  }
+}

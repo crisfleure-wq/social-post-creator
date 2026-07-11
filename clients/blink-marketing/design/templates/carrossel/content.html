@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+{{TOKENS_CSS}}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 1080px;
+  height: 1440px;
+  overflow: hidden;
+  font-family: var(--font-body);
+  background: var(--bg-canvas);
+  color: var(--fg-default);
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  padding: var(--canvas-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  background: var(--bg-canvas);
+}
+
+/* Number indicator top-right */
+.number-tag {
+  position: absolute;
+  top: var(--canvas-padding);
+  right: var(--canvas-padding);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--brand-accent);
+  color: var(--fg-on-accent);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--brand-primary);
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--brand-primary-deep);
+  margin-bottom: 28px;
+}
+
+.title .accent {
+  background: linear-gradient(180deg, transparent 55%, var(--brand-accent) 55%);
+  padding: 0 4px;
+}
+
+.body-text {
+  font-family: var(--font-body);
+  font-size: 22px;
+  line-height: 1.55;
+  color: var(--fg-default);
+  margin-bottom: 28px;
+}
+
+/* Numbered steps */
+.steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.steps li {
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 1.45;
+  color: var(--fg-default);
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.steps li:last-child { border-bottom: none; }
+
+.step-num {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 28px;
+  color: var(--brand-accent);
+  min-width: 32px;
+  line-height: 1.2;
+}
+
+/* Contrast callout */
+.callout {
+  background: var(--brand-primary);
+  color: var(--fg-on-primary);
+  border-radius: var(--radius-md);
+  padding: 20px 28px;
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 1.5;
+  margin-top: 8px;
+}
+
+.callout strong {
+  color: var(--brand-accent);
+}
+
+/* Footer */
+.footer {
+  position: absolute;
+  bottom: var(--canvas-padding);
+  left: var(--canvas-padding);
+  right: var(--canvas-padding);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 16px;
+}
+
+.handle {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg-muted);
+}
+
+.page-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--fg-subtle);
+}
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="eyebrow" id="eyebrow"></div>
+  <h2 class="title" id="title"></h2>
+  <p class="body-text" id="body"></p>
+  <ol class="steps" id="steps"></ol>
+  <div class="callout" id="callout" style="display:none"></div>
+  <div class="footer">
+    <span class="handle">{{HANDLE}}</span>
+    <span class="page-label">{{PAGE_LABEL}}</span>
+  </div>
+</div>
+<script>
+const slide = {{SLIDE_JSON}};
+
+const eyebrowEl = document.getElementById('eyebrow');
+const titleEl   = document.getElementById('title');
+const bodyEl    = document.getElementById('body');
+const stepsEl   = document.getElementById('steps');
+const calloutEl = document.getElementById('callout');
+
+if (slide.label) { eyebrowEl.textContent = slide.label; }
+
+if (slide.titleAccent && slide.title.includes(slide.titleAccent)) {
+  const parts = slide.title.split(slide.titleAccent);
+  titleEl.innerHTML = parts[0] +
+    '<span class="accent">' + slide.titleAccent + '</span>' +
+    (parts[1] || '');
+} else {
+  titleEl.textContent = slide.title;
+}
+
+if (slide.titleSize) titleEl.style.fontSize = slide.titleSize + 'px';
+if (slide.bodySize)  bodyEl.style.fontSize  = slide.bodySize  + 'px';
+
+if (slide.body) { bodyEl.textContent = slide.body; }
+else { bodyEl.style.display = 'none'; }
+
+if (slide.steps && slide.steps.length > 0) {
+  slide.steps.forEach((step, i) => {
+    const li = document.createElement('li');
+    li.innerHTML = '<span class="step-num">' + (i + 1) + '</span>' +
+                   '<span>' + step + '</span>';
+    stepsEl.appendChild(li);
+  });
+} else {
+  stepsEl.style.display = 'none';
+}
+
+/* callout: use terminal field (single string) as a contrast box */
+if (slide.terminal && slide.terminal.length > 0) {
+  calloutEl.style.display = 'block';
+  calloutEl.innerHTML = slide.terminal
+    .map(l => l.text)
+    .join('<br>');
+}
+</script>
+</body>
+</html>

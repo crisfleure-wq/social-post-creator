@@ -1,34 +1,60 @@
-# social_post_creator
+# social_post_creator — Plugin Claude Code
 
-> Pipeline multi-agente para criar posts Instagram (carrossel "tech hacker") a partir de
-> tema/notícia.
+> Plugin Fable 5 Code pessoal para criar posts Instagram (carrossel, estático, stories) multi-cliente.
+> Roda de qualquer projeto/diretório via `/social-post-creator:carrossel`, `/social-post-creator:estatico`, etc.
 
 ## Stack
 
-- **Pipeline:** Claude Code subagents (Markdown) + slash command `/criar-post`
-- **Renderer carrossel:** Node 20 + Puppeteer (HTML/CSS → PNG 1080×1350)
-- **Renderer single:** Node 20 + OpenAI `gpt-image-1` (PNG 1024×1024 ou 1024×1536)
-- **Validação:** Zod schema (`scripts/render.mjs`, `scripts/render-single.mjs`)
-- **Design system carrossel:** skill `hacker-carousel` (`.claude/skills/hacker-carousel/`)
+- **Plugin:** Claude Code com manifest `.claude-plugin/plugin.json`
+- **Pipeline:** 4 subagents (news-scout, carousel-writer, image-prompt-writer, caption-writer)
+- **Skills:** 7 orquestradores em `skills/`
+- **Renderer carrossel:** Node 20 + Puppeteer (HTML/CSS → PNG 1080×1440)
+- **Renderer single:** Node 20 + provider chain (PNG 1080×1440 feed ou 1080×1920 stories)
+- **Validação:** Zod schema (`scripts/render.mjs`, `scripts/render-image.mjs`)
+- **Instalação:** symlink em `~/.claude/skills/social-post-creator` ou `--plugin-dir`
 
-## Comandos essenciais
+## Como usar
+
+### Instalação (uma única vez)
 
 ```bash
-# Setup (uma vez)
-npm install                    # puppeteer + zod (baixa Chromium ~150MB)
+# Option 1: Symlink (recomendado — atualizações automáticas)
+ln -s /c/Dev/social-post-creator ~/.claude/skills/social-post-creator
+npm install  # na pasta do plugin
 
-# .env (uma vez, fora do git)
-echo 'OPENAI_API_KEY=sk-...' > .env
+# Option 2: Durante desenvolvimento
+claude --plugin-dir c:/Dev/social-post-creator
+```
 
-# Geração — dentro de uma sessão Claude Code
-/criar-post <tema>                                    # default: carrossel
-/criar-post <tema> --formato=carrossel                # idem
-/criar-post <tema> --formato=single                   # imagem 1x1 (1024×1024)
-/criar-post <tema> --formato=single --size=9x16       # imagem ~9:16 (1024×1536)
+### Geração — de qualquer projeto
 
-# Renderers standalone
-node scripts/render.mjs images/carrossel/<slug>/v<N>
-node --env-file=.env scripts/render-single.mjs images/single/<slug>/v<N>
+```bash
+# Carrossel (5-10 slides)
+/social-post-creator:carrossel <cliente> <tema> [N slides]
+
+# Post estático (1080×1440)
+/social-post-creator:estatico <cliente> <tema>
+
+# Stories (1080×1920)
+/social-post-creator:stories <cliente> <tema> [N slides]
+
+# Capa de Reels (1080×1920)
+/social-post-creator:reels-cover <cliente> <tema>
+
+# Novo cliente
+/social-post-creator:novo-cliente <slug> <nome> <@handle>
+
+# Legado (sem cliente específico)
+/social-post-creator:criar-post <tema> [--formato=carrossel|single] [--size=1x1|9x16]
+```
+
+### CLI helpers (usados internamente pelos skills)
+
+```bash
+spc-load-client <cliente> <formato>      # carrega config
+spc-resolve-output <cliente> <tema> <formato>  # resolve slug + versão
+spc render.mjs <dir> --client=<slug>        # renderiza carrossel
+spc render-image.mjs <dir> --client=<slug>  # renderiza estático
 ```
 
 ## Convenções
@@ -41,47 +67,65 @@ node --env-file=.env scripts/render-single.mjs images/single/<slug>/v<N>
 ## Estrutura
 
 ```
-.claude/
-  agents/                      # 4 subagents do pipeline
-    news-scout.md              # WebSearch + WebFetch → research.json
-    carousel-writer.md         # research.json → slides.json (formato=carrossel)
-    image-prompt-writer.md     # research.json → image-prompt.json (formato=single)
-    caption-writer.md          # → caption.txt (≤5 hashtags)
-  commands/criar-post.md       # orquestrador (dispatch carrossel|single)
-  skills/hacker-carousel/      # design system carrossel (tokens + 3 templates HTML)
+.claude-plugin/
+  plugin.json                  # manifest do plugin
+agents/                        # 4 subagents do pipeline
+  news-scout.md                # WebSearch + WebFetch → research.json
+  carousel-writer.md           # research.json → slides.json (carrossel/stories)
+  image-prompt-writer.md       # research.json → image-prompt.json (estatico/reels-cover)
+  caption-writer.md            # → caption.txt (≤5 hashtags)
+skills/                        # 7 orquestradores (slash commands do plugin)
+  carrossel/SKILL.md           # carrossel multi-cliente
+  estatico/SKILL.md            # post estático multi-cliente
+  stories/SKILL.md             # stories multi-cliente
+  reels-cover/SKILL.md         # capa de reels
+  novo-cliente/SKILL.md        # cadastro de novo cliente
+  criar-post/SKILL.md          # legado (sem multi-cliente)
+  hacker-carousel/             # design system carrossel (tokens + templates)
+bin/                           # CLI wrappers (adicionados ao PATH pelo plugin)
+  spc                          # router de scripts
+  spc-load-client              # carrega config do cliente
+  spc-resolve-output           # resolve slug + versão
+clients/<slug>/                 # config + design system por cliente
+  client.json                  # identidade, voz, research config, formatos
+  design/                      # DESIGN.md, tokens.css, templates/
+  briefing.md                  # tom e diretrizes
 public/claude-code-icon.png    # mascote (branding)
 scripts/
   render.mjs                   # Puppeteer renderer carrossel (Zod-validated)
-  render-single.mjs            # OpenAI gpt-image-1 renderer (Zod-validated)
-  lib/slug.mjs                 # slug + version helpers (carrossel|single)
-images/carrossel/<slug>/v<N>/  # outputs carrossel (gitignored)
+  render-image.mjs             # Provider-chain renderer estático (Zod-validated)
+  lib/slug.mjs                 # slug + version helpers
+  lib/client-loader.mjs        # carrega config do cliente
+  lib/image-providers.mjs      # provider chain (Pollinations → Together → Google AI → OpenAI)
+images/<cliente>/carrossel/<slug>/v<N>/  # outputs carrossel (gitignored)
   research.json
   slides.json
   caption.txt
   html/slide_NN.html           # debug-friendly
-  slides/slide_NN.png          # output final 1080×1350
+  slides/slide_NN.png          # output final 1080×1440
   meta.json
-images/single/<slug>/v<N>/     # outputs single (gitignored)
+images/<cliente>/estatico/<slug>/v<N>/   # outputs estático (gitignored)
   research.json
   image-prompt.json
   caption.txt
-  post.png                     # output final 1024×1024 ou 1024×1536
+  post.png                     # output final 1080×1440
   meta.json
+images/<cliente>/stories/<slug>/v<N>/    # outputs stories (gitignored)
+  slides/slide_NN.png          # output final 1080×1920
 ```
 
-## V2 — single-image post (gpt-image-1)
+## V2 — post estático (provider chain)
 
-**Implementado.** `/criar-post <tema> --formato=single [--size=1x1|9x16]`.
+**Implementado.** Comandos: `/estatico <cliente> <tema>` e `/reels-cover <cliente> <tema>`.
 
 - Reusa `news-scout`.
-- `image-prompt-writer` destila a notícia em prompt visual (inglês, denso, hacker/cyberpunk)
-  + headline curta PT-BR que `gpt-image-1` renderiza na imagem.
+- `image-prompt-writer` destila a notícia em prompt visual (inglês, denso, baseado no
+  design system do cliente) + headline curta PT-BR.
 - `caption-writer` gera a legenda PT-BR (mesma regra de ≤5 hashtags).
-- `render-single.mjs` chama OpenAI Images API com `OPENAI_API_KEY` lido de `.env`
-  via `node --env-file=.env`.
-- `gpt-image-1` suporta nativamente apenas `1024x1024`, `1024x1536`, `1536x1024`.
-  Por isso `--size=9x16` mapeia pra `1024x1536` (2:3, não exato 9:16) e o IG faz
-  o letterbox/crop no upload. Documentado, não bug.
+- `render-image.mjs` tenta provider chain (Pollinations → Together → Google AI → OpenAI)
+  com fallback automático. Se todos falharem, gera `prompt-ready.md`.
+- Output final é **1080×1440** (feed 3:4) ou **1080×1920** (stories/reels 9:16).
+  O renderer converte internamente de 1024×1024/1024×1536 para essas dimensões.
 
 ## Quando pedir ajuda
 

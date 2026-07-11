@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+{{TOKENS_CSS}}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: calc(var(--canvas-w) * 1px);
+  height: calc(var(--canvas-h) * 1px);
+  overflow: hidden;
+  font-family: var(--font-body);
+  background: var(--bg-canvas);
+  color: var(--fg-default);
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  padding: var(--canvas-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brand-accent);
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1.15;
+  color: var(--brand-primary);
+  margin-bottom: 24px;
+}
+
+.title .accent {
+  color: var(--brand-accent);
+}
+
+.body-text {
+  font-family: var(--font-body);
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--fg-default);
+  margin-bottom: 24px;
+}
+
+.steps {
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps li {
+  counter-increment: step;
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--fg-default);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.steps li::before {
+  content: counter(step);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--brand-accent);
+  min-width: 28px;
+}
+
+.footer {
+  position: absolute;
+  bottom: var(--canvas-padding);
+  left: var(--canvas-padding);
+  right: var(--canvas-padding);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.handle {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--fg-muted);
+}
+
+.page-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--fg-muted);
+}
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="label" id="label"></div>
+  <h2 class="title" id="title"></h2>
+  <p class="body-text" id="body"></p>
+  <ol class="steps" id="steps"></ol>
+  <div class="footer">
+    <span class="handle">{{HANDLE}}</span>
+    <span class="page-label">{{PAGE_LABEL}}</span>
+  </div>
+</div>
+<script>
+const slide = {{SLIDE_JSON}};
+
+const labelEl = document.getElementById('label');
+const titleEl = document.getElementById('title');
+const bodyEl = document.getElementById('body');
+const stepsEl = document.getElementById('steps');
+
+if (slide.label) labelEl.textContent = slide.label;
+
+if (slide.titleAccent && slide.title.includes(slide.titleAccent)) {
+  const parts = slide.title.split(slide.titleAccent);
+  titleEl.innerHTML = parts[0] + '<span class="accent">' + slide.titleAccent + '</span>' + (parts[1] || '');
+} else {
+  titleEl.textContent = slide.title;
+}
+
+if (slide.titleSize) titleEl.style.fontSize = slide.titleSize + 'px';
+if (slide.bodySize) bodyEl.style.fontSize = slide.bodySize + 'px';
+
+if (slide.body) {
+  bodyEl.textContent = slide.body;
+} else {
+  bodyEl.style.display = 'none';
+}
+
+if (slide.steps && slide.steps.length > 0) {
+  slide.steps.forEach(step => {
+    const li = document.createElement('li');
+    li.textContent = step;
+    stepsEl.appendChild(li);
+  });
+} else {
+  stepsEl.style.display = 'none';
+}
+</script>
+</body>
+</html>

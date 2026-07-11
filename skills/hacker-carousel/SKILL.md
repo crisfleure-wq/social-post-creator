@@ -1,7 +1,5 @@
 ---
-name: hacker-carousel
-description: Diretrizes editoriais e de design para gerar carrosseis Instagram no tema "tech hacker" (terminal, dark, matrix). Use quando precisar montar `slides.json` ou ajustar estética dos slides 1080×1350 deste projeto. Define design tokens, tipos de slide, limites de texto e identidade visual.
-allowed-tools: Read, Glob, Grep
+description: Diretrizes editoriais e de design para gerar carrosseis Instagram no tema "tech hacker" (terminal, dark, matrix). Use quando precisar montar `slides.json` ou ajustar estética dos slides 1080×1440 deste projeto. Define design tokens, tipos de slide, limites de texto e identidade visual.
 ---
 
 # Hacker Carousel — Skill
@@ -18,7 +16,7 @@ no slide de capa e no slide final como branding.
 
 ## Design tokens (verdade canônica)
 
-Ficam em `.claude/skills/hacker-carousel/tokens.css` (importados pelos templates).
+Ficam em `skills/hacker-carousel/tokens.css` (importados pelos templates).
 
 | Token | Valor | Uso |
 |---|---|---|
@@ -33,7 +31,7 @@ Ficam em `.claude/skills/hacker-carousel/tokens.css` (importados pelos templates
 | `--font-display` | Space Grotesk 700 | Títulos |
 | `--font-mono` | JetBrains Mono 500 | Terminal, labels, badges |
 | `--font-body` | Inter 400/500 | Body |
-| Canvas | 1080×1350 px | Aspect 4:5 |
+| Canvas | 1080×1440 px | Aspect 3:4 |
 | Padding | 80 px | Margem interna |
 
 ## Tipos de slide
@@ -122,12 +120,12 @@ Array de até 4 badges no rodapé do slide:
 
 ## Templates
 
-Cada tipo tem template HTML em `.claude/skills/hacker-carousel/templates/`:
+Cada tipo tem template HTML em `skills/hacker-carousel/templates/`:
 - `cover.html`
 - `content.html`
 - `stack.html`
 
 Os templates são auto-contidos (CSS inline, imagens como data URI). O renderer
 substitui `{{SLIDE_JSON}}`, `{{TOKENS_CSS}}` e `{{MASCOT_DATA_URI}}` por valores reais.
-Para preview standalone, gerar via `node scripts/render.mjs <dir>` e abrir
+Para preview standalone, gerar via `spc render.mjs <dir>` e abrir
 `html/slide_NN.html` no browser.

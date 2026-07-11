@@ -1,0 +1,71 @@
+{
+  "slug": "blink-marketing",
+  "displayName": "Blink Marketing",
+  "handle": "@blinkmarketing.ag",
+  "platform": "instagram",
+
+  "formats": {
+    "carrossel": {
+      "enabled": true,
+      "renderMode": "puppeteer",
+      "canvas": { "width": 1080, "height": 1440 },
+      "slideCount": { "min": 5, "max": 10, "default": 7 }
+    },
+    "estatico": {
+      "enabled": true,
+      "renderMode": "generative",
+      "generativeProvider": "chatgpt",
+      "canvas": { "width": 1080, "height": 1440 },
+      "quality": "high"
+    },
+    "stories": {
+      "enabled": true,
+      "renderMode": "puppeteer",
+      "canvas": { "width": 1080, "height": 1920 },
+      "slideCount": { "min": 3, "max": 7, "default": 5 }
+    },
+    "reels-cover": {
+      "enabled": true,
+      "renderMode": "generative",
+      "generativeProvider": "gemini",
+      "canvas": { "width": 1080, "height": 1920 },
+      "quality": "high"
+    }
+  },
+
+  "identity": {
+    "tone": "calmo-confiante-direto",
+    "language": "pt-BR",
+    "niche": "marketing 360 / gestão de performance",
+    "mascotPath": null,
+    "logoPath": "assets/logo-color.png",
+    "logoWhitePath": "assets/logo-white.png",
+    "footerHandle": true
+  },
+
+  "caption": {
+    "maxHashtags": 5,
+    "maxLength": 2200,
+    "signatureHashtags": ["#blinkmarketing", "#gestaodeperformance"],
+    "ctaStyle": "convite"
+  },
+
+  "research": {
+    "preferredSources": ["Rock Content", "Resultados Digitais", "Neil Patel BR", "HubSpot"],
+    "language": ["pt-BR"],
+    "recencyDays": 60
+  },
+
+  "imageGeneration": {
+    "providerChain": ["google-ai-studio", "openrouter", "together", "openai", "pollinations"],
+    "fallbackMode": "prompt-ready"
+  },
+
+  "voice": {
+    "pronoun": "nós",
+    "avoidWords": ["revolucionar", "disruptivo", "incrível", "transformador", "growth hacking"],
+    "embracePatterns": ["contraste (X sem Y não funciona)", "três tempos (Mais X. Mais Y. Menos Z.)", "exemplos concretos"],
+    "maxExclamationsPerPost": 1,
+    "emoji": false
+  }
+}

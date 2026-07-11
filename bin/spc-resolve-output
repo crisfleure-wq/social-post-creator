@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# spc-resolve-output <clientSlug> <tema> <formato>
+# Resolve slug + versão e imprime JSON com versionDir.
+
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0" 2>/dev/null || echo "$0")" )" && pwd)"
+PLUGIN_DIR="$(dirname "$SCRIPT_DIR")"
+
+CLIENT_SLUG="$1"
+TEMA="$2"
+FORMATO="$3"
+
+if [ -z "$CLIENT_SLUG" ] || [ -z "$TEMA" ]; then
+  echo "Uso: spc-resolve-output <clientSlug> <tema> [formato]" >&2
+  exit 1
+fi
+
+node "$PLUGIN_DIR/scripts/lib/_cli-resolve-output.mjs" "$CLIENT_SLUG" "$TEMA" "$FORMATO"

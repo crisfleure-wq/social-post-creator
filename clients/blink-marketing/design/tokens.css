@@ -1,0 +1,100 @@
+/* =========================================================================
+   Blink Marketing — Design Tokens (Social Post Creator)
+   Brand: #F4D35E (yellow) / #0D3B66 (navy) / #96989A (gray)
+   ========================================================================= */
+
+@font-face {
+  font-family: 'Gotham';
+  src: url('fonts/gotham.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Gotham';
+  src: url('fonts/gotham-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Gotham';
+  src: url('fonts/gotham-ultra.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Gotham';
+  src: url('fonts/gotham-extralight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ---------- Brand core ---------- */
+  --brand-primary:     #0D3B66;  /* Navy — dominante */
+  --brand-accent:      #F4D35E;  /* Yellow — acento */
+  --brand-neutral:     #96989A;  /* Gray — neutro */
+
+  --brand-primary-soft:  #1E5A93;
+  --brand-primary-deep:  #082849;
+  --brand-accent-soft:   #FCEBA6;
+  --brand-accent-deep:   #D9B33A;
+
+  /* ---------- Surfaces ---------- */
+  --bg-canvas:         #F7F7F5;  /* off-white */
+  --bg-surface:        #FFFFFF;
+  --bg-inverse:        #0D3B66;  /* navy panels */
+  --bg-ink:            #18181B;
+
+  /* ---------- Foreground ---------- */
+  --fg-default:        #18181B;
+  --fg-muted:          #5E6063;
+  --fg-subtle:         #96989A;
+  --fg-brand:          #0D3B66;
+  --fg-inverse:        #FFFFFF;
+  --fg-on-accent:      #0D3B66;  /* navy on yellow */
+  --fg-on-primary:     #FFFFFF;  /* white on navy */
+
+  /* ---------- Borders ---------- */
+  --border-subtle:     #E6E6E3;
+  --border-default:    #C9CACC;
+  --border-strong:     #0D3B66;
+
+  /* ---------- Type ---------- */
+  --font-display:      'Gotham', 'Montserrat', 'Helvetica Neue', system-ui, sans-serif;
+  --font-body:         'Manrope', system-ui, -apple-system, sans-serif;
+  --font-mono:         ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ---------- Canvas ---------- */
+  --canvas-w:          1080;
+  --canvas-h:          1440;
+  --canvas-padding:    60px;
+
+  /* ---------- Radius ---------- */
+  --radius-sm:         8px;
+  --radius-md:         14px;
+  --radius-lg:         20px;
+  --radius-xl:         28px;
+  --radius-pill:       999px;
+
+  /* ---------- Shadows (navy-tinted) ---------- */
+  --shadow-sm:         0 2px 6px rgba(13, 59, 102, 0.08);
+  --shadow-md:         0 8px 24px rgba(13, 59, 102, 0.10);
+  --shadow-lg:         0 24px 48px -12px rgba(13, 59, 102, 0.20);
+  --shadow-yellow:     0 12px 32px -8px rgba(244, 211, 94, 0.55);
+
+  /* ---------- Spacing (4px base) ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+}

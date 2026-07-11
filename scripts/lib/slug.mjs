@@ -30,16 +30,22 @@ export function nextVersion(baseDir) {
 }
 
 /**
- * Resolve o diretório completo: images/carrossel/<slug>/v<N>/.
+ * Resolve o diretório completo de output.
+ * Com clientSlug: images/<client>/<format>/<slug>/v<N>/
+ * Sem clientSlug (legacy): images/<format>/<slug>/v<N>/
  */
-export function resolveOutputDir(rootDir, theme, format = 'carrossel') {
+export function resolveOutputDir(rootDir, theme, format = 'carrossel', clientSlug = null) {
   const slug = slugify(theme);
-  const baseDir = join(rootDir, 'images', format, slug);
+  const baseDir = clientSlug
+    ? join(rootDir, 'images', clientSlug, format, slug)
+    : join(rootDir, 'images', format, slug);
   const version = nextVersion(baseDir);
   return {
     slug,
     version,
     baseDir,
     versionDir: join(baseDir, `v${version}`),
+    clientSlug,
+    format,
   };
 }

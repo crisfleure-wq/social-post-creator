@@ -1,0 +1,46 @@
+/* =========================================================================
+   {{DISPLAY_NAME}} — Design Tokens
+   ========================================================================= */
+
+:root {
+  /* ---------- Brand core ---------- */
+  --brand-primary:     #000000;
+  --brand-accent:      #000000;
+  --brand-neutral:     #666666;
+
+  /* ---------- Surfaces ---------- */
+  --bg-canvas:         #FFFFFF;
+  --bg-surface:        #FFFFFF;
+  --bg-inverse:        #000000;
+
+  /* ---------- Foreground ---------- */
+  --fg-default:        #18181B;
+  --fg-muted:          #6B7280;
+  --fg-inverse:        #FFFFFF;
+  --fg-on-accent:      #FFFFFF;
+
+  /* ---------- Borders ---------- */
+  --border-subtle:     #E5E7EB;
+  --border-default:    #D1D5DB;
+  --border-strong:     #000000;
+
+  /* ---------- Type ---------- */
+  --font-display:      system-ui, sans-serif;
+  --font-body:         system-ui, sans-serif;
+  --font-mono:         ui-monospace, monospace;
+
+  /* ---------- Canvas ---------- */
+  --canvas-w:          1080;
+  --canvas-h:          1440;
+  --canvas-padding:    60px;
+
+  /* ---------- Radius ---------- */
+  --radius-sm:         8px;
+  --radius-md:         14px;
+  --radius-lg:         20px;
+  --radius-pill:       999px;
+
+  /* ---------- Shadows ---------- */
+  --shadow-sm:         0 2px 6px rgba(0,0,0,0.08);
+  --shadow-md:         0 8px 24px rgba(0,0,0,0.10);
+}

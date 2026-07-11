@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+{{TOKENS_CSS}}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: calc(var(--canvas-w) * 1px);
+  height: calc(var(--canvas-h) * 1px);
+  overflow: hidden;
+  font-family: var(--font-body);
+  background: var(--bg-canvas);
+  color: var(--fg-default);
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  padding: var(--canvas-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.label {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brand-accent);
+  margin-bottom: 24px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 1.1;
+  color: var(--brand-primary);
+  margin-bottom: 20px;
+}
+
+.title .accent {
+  color: var(--brand-accent);
+}
+
+.badges {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.badge {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--brand-accent);
+  color: var(--fg-on-accent);
+}
+
+.footer {
+  position: absolute;
+  bottom: var(--canvas-padding);
+  left: var(--canvas-padding);
+  right: var(--canvas-padding);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.handle {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--fg-muted);
+}
+
+.page-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--fg-muted);
+}
+
+.logo {
+  height: 32px;
+  width: auto;
+}
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="label" id="label"></div>
+  <h1 class="title" id="title"></h1>
+  <div class="badges" id="badges"></div>
+  <div class="footer">
+    <span class="handle">{{HANDLE}}</span>
+    <span class="page-label">{{PAGE_LABEL}}</span>
+  </div>
+</div>
+<script>
+const slide = {{SLIDE_JSON}};
+
+const labelEl = document.getElementById('label');
+const titleEl = document.getElementById('title');
+const badgesEl = document.getElementById('badges');
+
+if (slide.label) labelEl.textContent = slide.label;
+
+if (slide.titleAccent && slide.title.includes(slide.titleAccent)) {
+  const parts = slide.title.split(slide.titleAccent);
+  titleEl.innerHTML = parts[0] + '<span class="accent">' + slide.titleAccent + '</span>' + (parts[1] || '');
+} else {
+  titleEl.textContent = slide.title;
+}
+
+if (slide.titleSize) titleEl.style.fontSize = slide.titleSize + 'px';
+
+if (slide.badges) {
+  slide.badges.forEach(b => {
+    const span = document.createElement('span');
+    span.className = 'badge';
+    span.textContent = b.text;
+    badgesEl.appendChild(span);
+  });
+}
+</script>
+</body>
+</html>

@@ -1,16 +1,16 @@
 ---
-description: Pipeline completo de criação de post Instagram (carrossel ou imagem única) a partir de tema/notícia.
-argument-hint: <tema ou notícia> [--formato=carrossel|single] [--size=1x1|9x16]
+description: Pipeline legado de criação de post Instagram (carrossel ou imagem única) sem multi-cliente. Use /criar-post apenas para posts sem cliente específico.
+disable-model-invocation: true
 ---
 
-# /criar-post — Orquestrador
+# /criar-post — Orquestrador (Legado)
 
 Você é o **orquestrador** do pipeline de criação de posts. Sua tarefa é coordenar subagents
 sequencialmente e rodar o renderer apropriado no final.
 
 Dois branches:
-- **carrossel** (default, V1): 5–10 slides 1080×1350 via Puppeteer
-- **single** (V2): 1 imagem 1:1 ou ~9:16 via OpenAI `gpt-image-1`
+- **carrossel** (default, V1): 5–10 slides 1080×1440 via Puppeteer
+- **single** (V2): 1 imagem 1:1 ou ~9:16 via provider chain
 
 ## Input
 
@@ -96,16 +96,14 @@ Reporte: *"Legenda: <X> hashtag(s)"*.
 #### 6a. Se `formato=carrossel`
 
 ```bash
-node scripts/render.mjs <versionDir>
+spc render.mjs <versionDir>
 ```
 
 #### 6b. Se `formato=single`
 
 ```bash
-node --env-file=.env scripts/render-single.mjs <versionDir>
+spc render-image.mjs <versionDir>
 ```
-
-`OPENAI_API_KEY` deve estar no `.env` do projeto. Se faltar, o renderer aborta com mensagem clara.
 
 Em qualquer caso: se falhar por validação Zod, **pare** e reporte. Não tente "corrigir"
 o JSON automaticamente — re-invoque o subagent correspondente passando o erro como contexto.
@@ -144,4 +142,4 @@ Para single:
 - ❌ Renderizar antes de ter o JSON intermediário válido
 - ❌ Continuar pra etapa N+1 se a etapa N falhou
 - ❌ Inventar fontes, datas ou conteúdo — tudo vem dos JSONs intermediários
-- ❌ Usar `--size` em formato carrossel (size é fixo 1080×1350 lá)
+- ❌ Usar `--size` em formato carrossel (size é fixo 1080×1440 lá)

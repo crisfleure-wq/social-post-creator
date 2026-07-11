@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# spc — Social Post Creator CLI wrapper
+# Resolve o path dos scripts relativos ao plugin, independente do cwd.
+
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0" 2>/dev/null || echo "$0")" )" && pwd)"
+PLUGIN_DIR="$(dirname "$SCRIPT_DIR")"
+
+SCRIPT_NAME="$1"
+shift
+
+if [ -z "$SCRIPT_NAME" ]; then
+  echo "Uso: spc <script.mjs> [args...]"
+  echo "Scripts disponíveis:"
+  echo "  render.mjs         — Renderiza carrossel (Puppeteer → PNG)"
+  echo "  render-image.mjs   — Renderiza imagem estática (provider chain → PNG)"
+  exit 1
+fi
+
+# Se tem .env no cwd, usa --env-file
+ENV_FLAG=""
+if [ -f ".env" ]; then
+  ENV_FLAG="--env-file=.env"
+fi
+
+exec node $ENV_FLAG "$PLUGIN_DIR/scripts/$SCRIPT_NAME" "$@"

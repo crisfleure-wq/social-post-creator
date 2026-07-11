@@ -1,0 +1,62 @@
+{
+  "slug": "{{SLUG}}",
+  "displayName": "{{DISPLAY_NAME}}",
+  "handle": "{{HANDLE}}",
+  "platform": "instagram",
+
+  "formats": {
+    "carrossel": {
+      "enabled": true,
+      "renderMode": "puppeteer",
+      "canvas": { "width": 1080, "height": 1440 },
+      "slideCount": { "min": 5, "max": 10, "default": 7 }
+    },
+    "estatico": {
+      "enabled": true,
+      "renderMode": "generative",
+      "generativeProvider": "chatgpt",
+      "canvas": { "width": 1080, "height": 1440 },
+      "quality": "high"
+    },
+    "stories": {
+      "enabled": false,
+      "renderMode": "puppeteer",
+      "canvas": { "width": 1080, "height": 1920 },
+      "slideCount": { "min": 3, "max": 7, "default": 5 }
+    },
+    "reels-cover": {
+      "enabled": false,
+      "renderMode": "generative",
+      "generativeProvider": "chatgpt",
+      "canvas": { "width": 1080, "height": 1920 },
+      "quality": "high"
+    }
+  },
+
+  "identity": {
+    "tone": "",
+    "language": "pt-BR",
+    "niche": "",
+    "mascotPath": null,
+    "logoPath": "assets/logo.png",
+    "footerHandle": true
+  },
+
+  "caption": {
+    "maxHashtags": 5,
+    "maxLength": 2200,
+    "signatureHashtags": [],
+    "ctaStyle": "question"
+  },
+
+  "research": {
+    "preferredSources": [],
+    "language": ["pt-BR"],
+    "recencyDays": 30
+  },
+
+  "imageGeneration": {
+    "providerChain": ["pollinations", "together", "google-ai-studio", "openai"],
+    "fallbackMode": "prompt-ready"
+  }
+}

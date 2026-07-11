@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# spc-load-client <clientSlug> [format]
+# Carrega contexto do cliente e imprime JSON.
+
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0" 2>/dev/null || echo "$0")" )" && pwd)"
+PLUGIN_DIR="$(dirname "$SCRIPT_DIR")"
+
+CLIENT_SLUG="$1"
+FORMAT="$2"
+
+if [ -z "$CLIENT_SLUG" ]; then
+  echo "Uso: spc-load-client <clientSlug> [format]" >&2
+  exit 1
+fi
+
+node "$PLUGIN_DIR/scripts/lib/_cli-load-client.mjs" "$CLIENT_SLUG" "$FORMAT"
